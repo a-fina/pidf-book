@@ -6,10 +6,11 @@
   "scripts": {
     "start": "electron index.js"
   },
-  "author": "Andrea Giammarchi",
+  "author": "Ax",
   "license": "MIT",
   "dependencies": {
-    "benja": "latest"
+    "benja": "latest",
+    "electron-pdf-window": "^1.0.12"
   },
   "devDependencies": {
     "electron": "latest",

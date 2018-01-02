@@ -2,6 +2,7 @@
 require(process.cwd() + '/node_modules/benja').paths();
 
 // simple server example
+// https://stackoverflow.com/questions/28029929/how-to-start-gulp-watch-task-when-i-type-npm-start
 require('http')
   .createServer(require('tiny-cdn').create({}))
   .listen(8080, '0.0.0.0');
@@ -13,6 +14,10 @@ const
   app = electron.app,
   BrowserWindow = electron.BrowserWindow
 ;
+
+
+// PDF Viewer
+const PDFWindow = require('electron-pdf-window')
 
 // in case by default WebGL doesn't work ... (rpi or others)
 app.commandLine.appendSwitch('--ignore-gpu-blacklist');
@@ -36,18 +41,27 @@ app.once('ready', () => {
     height: area.height
   });
 
+  PDFWindow.addSupport(this.window);
+
   this.window
     .once('closed', () => {
       // cleanup the reference
       this.window = null;
     })
-    .loadURL('http://localhost:8080/');
+// Benja default - npm start - OK .loadURL('http://localhost:8080');
+// Benja PDF - npm start - OK 
+    .loadURL('http://localhost:8080/dbt-roadbook.pdf');
+// File PDF Netwrok - npm start - OK  .loadURL('http://www.trentinotrailrunning.it/images/dolomiti-brenta-trail/2015/roadbook/dbt-roadbook.pdf');
+
     // test CSS
  // .loadURL('https://codepen.io/bennettfeely/full/tfbCo/');
     // test WebGL
  // .loadURL('http://get.webgl.org/');
     // stress WebGL
- // .loadURL('https://threejs.org/examples/webgl_geometry_cube.html');
+ //.loadURL('https://threejs.org/examples/webgl_geometry_cube.html');
+
+ // Gulpserver  .loadURL('http://localhost:8888/web/viewer.html?file=%2Fexamples%2Flearning%2Fhelloworld.pdf');
+ // Gulpserver  .loadURL('http://localhost:8888/examples/helloworld/helloworld.pdf');
 
 
   // for debugging purpose, it might be handy to be able
