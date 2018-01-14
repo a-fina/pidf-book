@@ -73,7 +73,7 @@ app.once('ready', () => {
   // Ctrl/Cmd are down.
   // https://stackoverflow.com/questions/32780726/how-to-access-dom-elements-in-electron
   // console.log("before-input-event:");
-  // console.log(input);
+  console.log(input);
   //mainWindow.webContents.setIgnoreMenuShortcuts(!input.control && !input.meta)
     var deltaScroll = '10';
     if (input.type === 'keyDown' && input.key === 'ArrowDown' && input.code === 'ArrowDown' ) {
@@ -91,18 +91,29 @@ function myFunc(arg) {
 }
 setTimeout(myFunc, 1500, 'funky');
 
+var scrollDirection = 0;
 // Custom Loop Event
 function intervalFunc() {
-  console.log('Loop on UI event');
+  console.log('Loop on UI event: count -> ' + scrollDirection );
   // mainWindow.focus();
 
   // Send Key signal - Automatica Scroll
-  /*
-  mainWindow.webContents.sendInputEvent({
-    type: 'keyDown',
-    keyCode: 'Down'
-  });
-  */
+  if ( scrollDirection < 10 ){
+    mainWindow.webContents.sendInputEvent({
+      type: 'keyDown',
+      keyCode: 'Down'
+    });
+  }else{
+    mainWindow.webContents.sendInputEvent({
+      type: 'keyDown',
+      keyCode: 'Up'
+    });
+  }
+  if ( scrollDirection >= 20) {
+    scrollDirection = 0;
+  } else {
+    scrollDirection++;
+  }
 
   // Read GPIO statuts
 }
